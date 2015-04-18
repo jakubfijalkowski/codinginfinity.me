@@ -1,0 +1,18 @@
+name:               codinginfinity
+version:            0.1.0.0
+build-type:         Simple
+cabal-version:      >= 1.10
+
+executable site
+  main-is:          Site.hs
+  hs-source-dirs:   .
+  build-depends:    base       == 4.*
+                  , hakyll     == 4.6.*
+                  , hsass
+                  , containers >= 0.5.5
+                  , regex-tdfa >= 1.2
+                  , array      >= 0.5
+                  , process    >= 1.2
+                  , directory  >= 1.2
+  ghc-options:      -threaded
+  default-language: Haskell2010

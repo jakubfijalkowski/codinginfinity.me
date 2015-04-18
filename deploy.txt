@@ -1,0 +1,4 @@
+open codinginfinity.me
+lcd "%1%"
+synchronize -transfer=binary -delete -criteria=either remote
+exit
