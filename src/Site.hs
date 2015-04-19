@@ -1,34 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
-import qualified Data.Map         as M
-import           Data.Monoid             ((<>), mconcat)
+import           Data.Monoid      ((<>))
 import           Hakyll           hiding (paginateContext)
-import           System.Directory        (getCurrentDirectory)
-import           System.Exit             (ExitCode)
-import           System.Process          (system)
-import           Text.Regex.TDFA         ((=~))
-import           Text.Sass
-
-
-postRegex :: String
-postRegex = "/posts/(.+-.+-.+)-(.+)\\.html"
-
-postPageRegex :: String
-postPageRegex = "/page_(.+)\\.html"
-
-postsPagePath :: Int -> String
-postsPagePath 1 = "index.html"
-postsPagePath n = "page_" ++ (show n) ++ ".html"
-
-staticPageRegex :: String
-staticPageRegex = "/(.+)\\.html"
-
-rewriteUrl :: String -> String
-rewriteUrl "/index.html" = "/"
-rewriteUrl s
-    | [_:d:t:_] <- s =~ postRegex     = "/post/" ++ d ++ "/" ++ t
-    | [_:p:_] <- s =~ postPageRegex   = "/page/" ++ p
-    | [_:p:_] <- s =~ staticPageRegex = "/"      ++ p
-    | otherwise = s
+import           System.Directory (getCurrentDirectory)
+import           System.Exit      (ExitCode)
+import           System.Process   (system)
+import           Paginator
+import           Rewriter
+import           Sass
+import           Sitemap
 
 postsPerPage :: Int
 postsPerPage = 5
@@ -45,6 +24,12 @@ feedConfig = FeedConfiguration {
 siteConfig :: Configuration
 siteConfig = def {
     deploySite = \_ -> deployWithWinSCP
+}
+
+sitemapConfig :: SitemapConfiguration
+sitemapConfig = def {
+    sitemapBase     = "http://codinginfinity.me/"
+  , sitemapRewriter = rewriteUrl
 }
 
 main :: IO ()
@@ -112,6 +97,10 @@ main = hakyllWith siteConfig $ do
             posts <- loadAllSnapshots "posts/*" "feed" >>= recentFirst
             renderRss feedConfig feedCtx posts
 
+    create ["sitemap.xml"] $ do
+        route   idRoute
+        compile $ generateSitemap sitemapConfig
+
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y"                                    <>
@@ -156,84 +145,12 @@ customContext =
     mapContext rewriteUrl (urlField "url") <>
     pathField "path"
 
-postPagesFor :: Int -> PageNumber -> [Int]
-postPagesFor total page
-    | total <= 6 = [1..total]
-    | otherwise = leftSide ++ rightSide
-    where
-        leftSide = if page <= 4
-            then [1..page]
-            else [1, 2, -1, page - 1, page]
-        rightSide = if total - page <= 3
-            then [page + 1 .. total]
-            else [page + 1, -1, total - 1, total]
-
 failIf :: (Monad m) => Bool -> a -> m a
 failIf True _ = fail "failWhen"
 failIf False v = return v
-
-sassCompilerWith :: SassOptions -> Compiler (Item String)
-sassCompilerWith opts = getResourceBody >>= compileItem
-    where
-        compileItem item = flip withItemBody item $ \body -> unsafeCompiler $ do
-            result <-  compileString body opts'
-            case result of
-                Left e -> do
-                    msg <- errorMessage e
-                    fail $ "Cannot parse Sass file " ++ path ++ "\n" ++ msg
-                Right r ->
-                    return r
-            where
-                path = toFilePath $ itemIdentifier item
-                opts' = opts { sassInputPath = Just path }
-
-sassCompiler :: Compiler (Item String)
-sassCompiler = sassCompilerWith def { sassOutputStyle = SassStyleCompressed }
 
 deployWithWinSCP :: IO ExitCode
 deployWithWinSCP = do
     dir <- getCurrentDirectory
     let siteDir = dir ++ "\\_site"
-    system $ "winscp.com /script=\"deploy.txt\" /parameter // \"" ++ siteDir ++ "\"" 
-
--- Copied from Hakyll sources
-paginateContext :: Paginate -> PageNumber -> Context a
-paginateContext pag currentPage = mconcat
-    [ field "firstPageNum"    $ \_ -> otherPage 1                 >>= num
-    , field "firstPageUrl"    $ \_ -> otherPage 1                 >>= url
-    , field "previousPageNum" $ \_ -> otherPage (currentPage - 1) >>= num
-    , field "previousPageUrl" $ \_ -> otherPage (currentPage - 1) >>= url
-    , field "nextPageNum"     $ \_ -> otherPage (currentPage + 1) >>= num
-    , field "nextPageUrl"     $ \_ -> otherPage (currentPage + 1) >>= url
-    , field "lastPageNum"     $ \_ -> otherPage lastPage          >>= num
-    , field "lastPageUrl"     $ \_ -> otherPage lastPage          >>= url
-    , field "currentPageNum"  $ \i -> thisPage i                  >>= num
-    , field "currentPageUrl"  $ \i -> thisPage i                  >>= url
-    , constField "numPages"   $ show $ paginateNumPages pag
-    ]
-  where
-    lastPage = paginateNumPages pag
-
-    thisPage i = return (currentPage, itemIdentifier i)
-    otherPage n
-        | n == currentPage = fail $ "This is the current page: " ++ show n
-        | otherwise        = case paginatePage pag n of
-            Nothing -> fail $ "No such page: " ++ show n
-            Just i  -> return (n, i)
-
-    num :: (Int, Identifier) -> Compiler String
-    num = return . show . fst
-
-    url :: (Int, Identifier) -> Compiler String
-    url (n, i) = getRoute i >>= \mbR -> case mbR of
-        Just r  -> return $ rewriteUrl $ toUrl r
-        Nothing -> fail $ "No URL for page: " ++ show n
-
-paginatePage :: Paginate -> PageNumber -> Maybe Identifier
-paginatePage pag pageNumber
-    | pageNumber < 1                      = Nothing
-    | pageNumber > (paginateNumPages pag) = Nothing
-    | otherwise                           = Just $ paginateMakeId pag pageNumber
-
-paginateNumPages :: Paginate -> Int
-paginateNumPages = M.size . paginateMap
+    system $ "winscp.com /script=\"deploy.txt\" /parameter // \"" ++ siteDir ++ "\""
