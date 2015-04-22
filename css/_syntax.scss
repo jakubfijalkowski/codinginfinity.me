@@ -3,7 +3,9 @@
  */
 
 .sourceCode {
-    font-size: 0.9em; }
+    font-size: 0.9em;
+    overflow: auto;
+}
 code > span.kw { color: #007020; font-weight: bold; }
 code > span.dt { color: #902000; }
 code > span.dv { color: #40a070; }
