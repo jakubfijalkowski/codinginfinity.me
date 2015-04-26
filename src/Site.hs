@@ -59,7 +59,6 @@ main = hakyllWith siteConfig $ do
         compile $ pandocCompiler
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= saveSnapshot "feed"
             >>= loadAndApplyTemplate "templates/default.html" postCtx
 
     match "pages/*" $ do
@@ -94,7 +93,7 @@ main = hakyllWith siteConfig $ do
         route   idRoute
         compile $ do
             let feedCtx = postCtx <> bodyField "description"
-            posts <- loadAllSnapshots "posts/*" "feed" >>= recentFirst
+            posts <- loadAllSnapshots "posts/*" "content" >>= recentFirst
             renderRss feedConfig feedCtx posts
 
     create ["sitemap.xml"] $ do
