@@ -1,4 +1,4 @@
 open codinginfinity.me
 lcd "%1%"
+cd /
 synchronize -transfer=binary -criteria=either remote
-exit
