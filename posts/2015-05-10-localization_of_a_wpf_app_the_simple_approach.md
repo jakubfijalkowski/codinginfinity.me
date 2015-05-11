@@ -18,7 +18,7 @@ As I said, I wanted this to be simple, both the XAML and the code. So this is my
 <Button Content="{ns:Loc ButtonText}" />
 ```
 
-And this should suffice. How to achieve this? Use bindings!
+And this should suffice. How to achieve this? Use good old `.resx` files and bindings!
 
 As we all know, WPF bindings support automatic updates (with `INotifyPropertyChanged`) and are able to attach themselves to any property, indexer or even properties in nested objects. This features can be abused a little in order to serve our needs. We just have to introduce an object which will expose resources we want to use and set it to as [the Source property]. My first idea was to use `dynamic` and [DynamicObject], but this seemed to me as an overkill. Fortunately, we may just abuse the indexers. ;)
 
@@ -35,7 +35,7 @@ public class LocExtension : Binding
 }
 ```
 
-`TranslationSource` is our class that wraps access to the resources. It's a singleton because we want to synchronize access to resources across all the uses of above extension and allow to change language in only one place.
+`TranslationSource` is our class that wraps access to the resources (or rather, `ResourceManager`). It's a singleton because we want to synchronize access to resources across all the uses of above extension and allow to change language in only one place.
 
 Retrieving single resource is easy - it's just a call to [ResourceManager.GetString] with name and correct culture:
 
@@ -75,7 +75,7 @@ public CultureInfo CurrentCulture
 }
 ```
 
-And that's it! We now can easily localize our application using `{ns:Loc}` and change language by updating `TranslationSource.CurrentCulture`. It lacks some features (e.g. support for images) and is not that extensible, but it should get the job done quite fast. And if we decide to use [WPF Localization Extension] instead, we just have to update namespaces in XAML and everything stays the same.
+And that's it! We now can easily localize our application with using `{ns:Loc}` and resource files and change language by updating `TranslationSource.CurrentCulture`. It lacks some features (e.g. support for images) and is not that extensible, but it should get the job done quite fast. And if we decide to use [WPF Localization Extension] instead, we just have to update namespaces in XAML and everything stays the same.
 
 Whole code used in this post is [available on GitHub].
 
