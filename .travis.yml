@@ -23,6 +23,7 @@ install:
 script:
  - cabal configure
  - cabal build
+ - cabal run build
 
 after_success:
  - deploy.sh
