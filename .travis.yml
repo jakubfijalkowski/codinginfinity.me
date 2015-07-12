@@ -17,8 +17,7 @@ before_install:
 
 install:
  - travis_retry cabal update
- - cabal install hakyll -f-previewServer -f-watchServer -f-checkExternal
- - cabal install --only-dependencies
+ - cabal install --only-dependencies -f-previewServer -f-watchServer -f-checkExternal
 
 script:
  - cabal configure
