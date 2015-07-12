@@ -1,0 +1,28 @@
+# Based on https://github.com/hvr/multi-ghc-travis
+language: c
+
+sudo: false
+
+addons:
+  apt:
+    sources:
+     - hvr-ghc
+    packages:
+     - cabal-install-1.22
+     - ghc-7.10.1
+     - lftp
+
+before_install:
+ - export PATH=/opt/ghc/7.10.1/bin:/opt/cabal/1.22/bin:$PATH
+
+install:
+ - travis_retry cabal update
+ - cabal install hakyll -f-previewServer -f-watchServer -f-checkExternal
+ - cabal install --only-dependencies
+
+script:
+ - cabal configure
+ - cabal build
+
+after_success:
+ - deploy.sh
