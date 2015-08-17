@@ -13,5 +13,5 @@ cabal.config
 _cache
 _site
 deploy.log
-deploy_local.sh
+build_local.sh
 .stack-work
