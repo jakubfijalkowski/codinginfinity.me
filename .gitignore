@@ -13,3 +13,4 @@ cabal.config
 _cache
 _site
 deploy.log
+deploy_local.sh
