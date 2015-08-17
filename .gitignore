@@ -14,3 +14,4 @@ _cache
 _site
 deploy.log
 deploy_local.sh
+.stack-work

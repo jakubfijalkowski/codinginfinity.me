@@ -1,7 +1,7 @@
 ---
 title: Custom SQL queries in Groundhog
 tags: haskell, database
-published: 2015-08-17 21:45
+published: 2015-08-17 23:10
 ---
 
 Recently, I've been in a mood to play with ORMs in Haskell. The most recognizable one is [Persistent], developed as part of a [Yesod] project. It is quite pleasant to work with, I must say, but some assumptions it makes are... not suitable for me. So I've looked for something different and I found out about [Groundhog], yet another ORM in Haskell. Unfortunately, it is almost identical to Persistent, but maybe instead of searching for the perfect library, I will be able to adapt it to my needs?

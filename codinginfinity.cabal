@@ -5,9 +5,10 @@ cabal-version:      >= 1.10
 
 executable site
   main-is:          Site.hs
+  other-modules:    Paginator, Rewriter, Sass, Sitemap
   hs-source-dirs:   src
-  build-depends:    base       == 4.*
-                  , hakyll     == 4.6.*
+  build-depends:    base       <= 5
+                  , hakyll     >= 4.7
                   , hsass
                   , containers >= 0.5.5
                   , regex-tdfa >= 1.2
