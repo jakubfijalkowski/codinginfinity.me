@@ -61,6 +61,13 @@ main = hakyllWith siteConfig $ do
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
 
+    match "drafts/*" $ do
+        route   $ setExtension "html"
+        compile $ pandocCompiler
+            >>= saveSnapshot "content"
+            >>= loadAndApplyTemplate "templates/draft.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+
     match "pages/*" $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
