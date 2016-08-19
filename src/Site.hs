@@ -64,9 +64,8 @@ main = hakyllWith siteConfig $ do
     match "drafts/*" $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
-            >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/draft.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/draft.html"   draftCtx
+            >>= loadAndApplyTemplate "templates/default.html" draftCtx
 
     match "pages/*" $ do
         route   $ setExtension "html"
@@ -117,6 +116,9 @@ postCtx =
     where
         isoFormat = "%Y-%m-%dT%H:%M:%S"
         sanitize = stripTags . filter (/= '\n')
+
+draftCtx :: Context String
+draftCtx = customContext
 
 postPageCtx :: Paginate -> PageNumber -> Context String
 postPageCtx paginate page =
