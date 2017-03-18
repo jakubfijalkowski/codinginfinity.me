@@ -1,4 +1,4 @@
 Coding Infinity
 ---------------
 
-This is source code of my blog - [Coding Infinity](http://codinginfinity.me).
+This is source code of my blog - [Coding Infinity](https://codinginfinity.me).

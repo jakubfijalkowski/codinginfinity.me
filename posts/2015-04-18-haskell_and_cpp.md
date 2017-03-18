@@ -117,6 +117,6 @@ Use hooks and distribute library with your package - the code is on [GitHub], so
 [tricks to achieve this]: https://wiki.haskell.org/CPlusPlus_from_Haskell "C++ from Haskell"
 [this project]: https://github.com/jakubfijalkowski/haskell-and-cpp
 [GitHub]: https://github.com/jakubfijalkowski/haskell-and-cpp "Haskell and C++ on GitHub"
-[hooks]: http://hackage.haskell.org/package/Cabal-1.22.2.0/docs/Distribution-Simple.html#t:UserHooks "Cabal hooks"
+[hooks]: https://hackage.haskell.org/package/Cabal-1.22.2.0/docs/Distribution-Simple.html#t:UserHooks "Cabal hooks"
 [as an exercise]: https://github.com/jakubfijalkowski/haskell-and-cpp/blob/master/Setup.hs#L49-L52
 [hsass]: https://github.com/jakubfijalkowski/hsass "hsass"

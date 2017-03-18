@@ -183,6 +183,6 @@ Groundhog is great, but having to be in a monad just to convert some `PersistVal
 
 I know now that I had not really knew what I wanted from ORMs. I think I still don't know, but at least I'm a bit wiser. ;)
 
-[Persistent]: http://www.stackage.org/package/persistent
+[Persistent]: https://www.stackage.org/package/persistent
 [Groundhog]: https://hackage.haskell.org/package/groundhog
 [Yesod]: http://www.yesodweb.com

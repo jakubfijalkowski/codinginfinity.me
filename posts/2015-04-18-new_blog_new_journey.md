@@ -27,7 +27,7 @@ Or in other words - creating impossible. ;)
 
 The old blog [still lives], but the oldest one is currently unavailable (if I find time to do it, it will be available at something like <http://old2.fiolek.org> ).
 
-[backend]: http://jaspervdj.be/hakyll
+[backend]: https://jaspervdj.be/hakyll
 [F-Algebras]: https://www.fpcomplete.com/user/bartosz/understanding-algebras
-[Oxford Dictionary]: http://www.oxforddictionaries.com/definition/english/infinity
+[Oxford Dictionary]: https://www.oxforddictionaries.com/definition/english/infinity
 [still lives]: http://old.fiolek.org

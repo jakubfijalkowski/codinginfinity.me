@@ -104,11 +104,11 @@ To sum up, even though Hakyll lacks this feature (and some other ;) ), it is qui
 Entire source code used in this post is available on [GitHub] as part of my site. It should be ready to copy-and-paste, if you want to use it. ;)
 
 [my approach]: https://github.com/jakubfijalkowski/codinginfinity/blob/cafb0a0254e2b6a488cc703f83a74846e3187e0b/src/Sitemap.hs
-[sitemaps]: http://www.sitemaps.org/
-[Bing]: http://www.bing.com/webmaster "Bing Webmaster Tools"
-[Google]: http://www.google.com/webmasters/tools/ "Google Webmaster Tools"
-[xml package]: http://hackage.haskell.org/package/xml
-[found]: http://stackoverflow.com/questions/1361307/which-haskell-xml-library-to-use
+[sitemaps]: https://www.sitemaps.org/
+[Bing]: https://www.bing.com/webmaster "Bing Webmaster Tools"
+[Google]: https://www.google.com/webmasters/tools/ "Google Webmaster Tools"
+[xml package]: https://hackage.haskell.org/package/xml
+[found]: https://stackoverflow.com/questions/1361307/which-haskell-xml-library-to-use
 [skip them for brevity]: https://github.com/jakubfijalkowski/codinginfinity/blob/cafb0a0254e2b6a488cc703f83a74846e3187e0b/src/Sitemap.hs#L79-L93
 [one/two-liners]: https://github.com/jakubfijalkowski/codinginfinity/blob/cafb0a0254e2b6a488cc703f83a74846e3187e0b/src/Sitemap.hs#L95-L114
 [the code is simple]: https://github.com/jakubfijalkowski/codinginfinity/blob/cafb0a0254e2b6a488cc703f83a74846e3187e0b/src/Sitemap.hs#L68-L77

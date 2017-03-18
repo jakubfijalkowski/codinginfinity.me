@@ -18,7 +18,7 @@ feedConfig = FeedConfiguration {
   , feedDescription = "Personal blog of Jakub Fija\x142kowski"
   , feedAuthorName  = "Jakub Fija\x142kowski"
   , feedAuthorEmail = "fiolek@fiolek.org"
-  , feedRoot        = "http://www.codinginfinity.me"
+  , feedRoot        = "https://www.codinginfinity.me"
 }
 
 siteConfig :: Configuration
@@ -28,7 +28,7 @@ siteConfig = def {
 
 sitemapConfig :: SitemapConfiguration
 sitemapConfig = def {
-    sitemapBase     = "http://codinginfinity.me/"
+    sitemapBase     = "https://codinginfinity.me/"
   , sitemapRewriter = rewriteUrl
 }
 

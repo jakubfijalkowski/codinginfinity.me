@@ -210,7 +210,7 @@ And this is it! Simple, reliable (well... probably - I need to test it on a livi
 The source code, cleaned and packed as a [FAKE] helper, is available on my [GitHub] and as the [NuGet package]. Hope you'll like it!
 
 
-[Last time]: http://www.codinginfinity.me/post/2016-08-19/fake_your_way_part1 (Fake your way to ASP.NET Core on Azure WebApps, part 1 - The Problem)
+[Last time]: https://www.codinginfinity.me/post/2016-08-19/fake_your_way_part1 (Fake your way to ASP.NET Core on Azure WebApps, part 1 - The Problem)
 [Azure Resource Manager]: https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/ "Azure Resource Manager"
 [decent documentation]: https://github.com/projectkudu/kudu/wiki/REST-API "Kudu's documentation"
 [FAKE]: https://fsharp.github.io/FAKE/ "F# Make"
