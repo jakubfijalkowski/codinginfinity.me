@@ -79,9 +79,17 @@ And that's it! We now can easily localize our application with using `{ns:Loc}` 
 
 Whole code used in this post is [available on GitHub].
 
+**Update 2018-12-27**
+
+I haven't thought that this approach would be used outside my & my friends projects. Yet the gist stars and comments tell a different story. :)
+
+Recently, [Urban] e-mailed me that he has been trying to make this a little bit more flexible. He wanted to use multiple `ResourceManager`s. We've came up with an idea to use attached properties to anchor correct `ResourceManagers` to component roots, so we can decide (in XAML) where to get the resources from. Now go, take a look what [Urban have made]. :)
+
 [locbaml]: https://msdn.microsoft.com/en-us/library/ms746621.aspx
 [WPF Localization Extension]: https://github.com/SeriousM/WPFLocalizationExtension
 [the Source property]: https://msdn.microsoft.com/en-us/library/system.windows.data.binding.source.aspx
 [DynamicObject]: https://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject.aspx
 [ResourceManager.GetString]: https://msdn.microsoft.com/en-us/library/bsb0cfet.aspx
 [available on GitHub]: https://gist.github.com/jakubfijalkowski/0771bfbd26ce68456d3e
+[Urban]: https://github.com/Jinjinov
+[Urban have made]: https://github.com/Jinjinov/wpf-localization-multiple-resource-resx-one-language

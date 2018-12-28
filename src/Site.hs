@@ -17,14 +17,12 @@ feedConfig = FeedConfiguration {
     feedTitle       = "Coding Infinity"
   , feedDescription = "Personal blog of Jakub Fija\x142kowski"
   , feedAuthorName  = "Jakub Fija\x142kowski"
-  , feedAuthorEmail = "fiolek@fiolek.org"
+  , feedAuthorEmail = "kuba@codinginfinity.me"
   , feedRoot        = "https://www.codinginfinity.me"
 }
 
 siteConfig :: Configuration
-siteConfig = def {
-    deploySite = \_ -> deployWithWinSCP
-}
+siteConfig = def
 
 sitemapConfig :: SitemapConfiguration
 sitemapConfig = def {
@@ -50,10 +48,6 @@ main = hakyllWith siteConfig $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "web.config" $ do
-        route   idRoute
-        compile copyFileCompiler
-
     match "posts/*" $ do
         route   $ setExtension "html"
         compile $ pandocCompiler
@@ -75,6 +69,10 @@ main = hakyllWith siteConfig $ do
     match "templates/*" $ compile templateCompiler
 
     match "favicon.ico" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match ".htaccess" $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -156,9 +154,3 @@ customContext =
 failIf :: (Monad m) => Bool -> a -> m a
 failIf True _ = fail "failWhen"
 failIf False v = return v
-
-deployWithWinSCP :: IO ExitCode
-deployWithWinSCP = do
-    dir <- getCurrentDirectory
-    let siteDir = dir ++ "\\_site"
-    system $ "winscp.com /script=\"deploy.txt\" /parameter // \"" ++ siteDir ++ "\""

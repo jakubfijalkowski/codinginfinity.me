@@ -1,0 +1,23 @@
+RewriteEngine On
+
+# HTTP -> HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Listing pages
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule "^page/([0-9]+)" page_$1.html [NC]
+
+# Post page
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule "^post/(.+-.+-.+)/(.+)" posts/$1-$2.html [NC]
+
+# Static page
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule "^([^\/\.]+)$" pages/$1.html [NC]
+
+# HSTS
+Header set Strict-Transport-Security "max-age=31415926; includeSubDomains; preload" env=HTTPS
