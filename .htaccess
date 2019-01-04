@@ -19,5 +19,10 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule "^([^\/\.]+)$" pages/$1.html [NC]
 
+# Drafts
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule "^([^\/\.]+)$" drafts/$1.html [NC]
+
 # HSTS
 Header set Strict-Transport-Security "max-age=31415926; includeSubDomains; preload" env=HTTPS

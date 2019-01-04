@@ -81,10 +81,10 @@ main = hakyllWith siteConfig $ do
         (fmap (paginateEvery postsPerPage) . sortRecentFirst)
         "posts/*"
         (fromFilePath . postsPagePath)
-    paginateRules paginatedPosts $ \page pattern -> do
+    paginateRules paginatedPosts $ \page pat -> do
         route   idRoute
         compile $ do
-            posts <- loadAll pattern >>= recentFirst
+            posts <- loadAll pat >>= recentFirst
             let ctx =
                     listField "posts" postCtx (return posts) <>
                     postPageCtx paginatedPosts page
@@ -129,7 +129,7 @@ postPageCtx paginate page =
         totalPages = paginateNumPages paginate
         pageItems = return $ fmap makePageItem (postPagesFor totalPages page)
         hasPaginator _ = failIf (totalPages == 1) ""
-        makePageItem i = Item (fromFilePath "") i
+        makePageItem = Item (fromFilePath "")
         pageTitleField p _ = failIf (page == 1) $ "Page " ++ show p
 
 pageLinkCtx :: PageNumber -> Context Int
