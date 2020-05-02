@@ -1,0 +1,9 @@
+{% macro tags(taxonomies) -%}
+{%- if taxonomies is containing("tags") -%}
+, tags:
+{% for t in taxonomies["tags"] -%}
+    <a href="{{ get_taxonomy_url(kind="tags", name=t) }}" alt="{{ t }}">{{t}}</a>
+    {%- if not loop.last -%}, {% endif %}
+{% endfor -%}
+{%- endif -%}
+{%- endmacro tags %}

@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h3>Available tags</h3>
+    <ul>
+    {% for tag in terms %}
+        <li><a href="{{ tag.permalink }}">{{ tag.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

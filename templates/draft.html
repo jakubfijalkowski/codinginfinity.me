@@ -1,9 +1,15 @@
-<article id="post-page">
-    <header>
-        <h2>$title$</h2>
-        <span class="by-line">$if(tags)$, tags: $tags$$endif$</span>
-    </header>
-    <section class="post-content">
-        $body$
-    </section>
-</article>
+{% extends "index.html" %}
+
+{% block title %}{{ page.title | safe }} - {{ config.title }}{% endblock title %}
+
+{% block content %}
+    <article id="post-page">
+        <header>
+            <h2>{{ page.title }}</h2>
+            <span class="by-line">draft</span>
+        </header>
+        <section class="post-content">
+            {{ page.content | safe }}
+        </section>
+    </article>
+{% endblock content %}

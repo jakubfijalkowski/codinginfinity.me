@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block title %}Drafts - {{ config.title }}{% endblock title %}
+
+{% block content %}
+    {% for page in section.pages %}
+    <article class="posts-item">
+        <header>
+            <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+            <span class="by-line">Draft</span>
+        </header>
+        <section class="post-content">{{ page.summary | safe }}</section>
+    </article>
+    {% endfor %}
+{% endblock content %}

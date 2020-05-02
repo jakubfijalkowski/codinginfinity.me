@@ -15,3 +15,4 @@ _site
 deploy.log
 build_local.sh
 .stack-work
+public

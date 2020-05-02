@@ -1,25 +1,28 @@
-<article id="post-page">
-    <header>
-        <h2>$title$</h2>
-        <span class="by-line"><time datetime="$isoDate$">$date$</time>$if(tags)$, tags: $tags$$endif$</span>
-    </header>
-    <section class="post-content">
-        $body$
-    </section>
-    <section class="post-comments">
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        var disqus_shortname = 'codinginfinity';
-        var disqus_identifier = '$url$';
-        var disqus_url = 'https://codinginfinity.me$url$';
-        var disqus_title = '$title$ - Coding Infinity';
+{% extends "index.html" %}
 
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    </section>
-</article>
+{% block title %}{{ page.title | safe }} - {{ config.title }}{% endblock title %}
+
+{% block metadata %}
+    {% set meta_description = page.summary | striptags | split(pat='\n') | join(sep='') %}
+    <meta name="twitter:title" content="{{ page.title | safe }} - {{ config.title }}">
+    <meta name="twitter:description" content="{{ meta_description }}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ page.title | safe }} - {{ config.title }}">
+    <meta property="og:description" content="{{ meta_description }}">
+    <meta property="og:article:published_time" content="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S")}}">
+{% endblock metadata %}
+
+{% block content %}
+    <article id="post-page">
+        <header>
+            <h2>{{ page.title }}</h2>
+            <span class="by-line">
+                <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S")}}">{{ page.date | date(format="%B %e, %Y") }}</time>
+                {{ macros::tags(taxonomies=page.taxonomies) }}
+            </span>
+        </header>
+        <section class="post-content">
+            {{ page.content | safe }}
+        </section>
+    </article>
+{% endblock content %}

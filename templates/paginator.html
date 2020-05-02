@@ -1,0 +1,39 @@
+{% if paginator.number_pagers > 1 %}
+    <nav class="pagination" role="navigation">
+        {% if paginator.previous %}
+            <a href="{{ paginator.previous }}" class="page-item">&laquo;</a>
+        {% else %}
+            <span class="page-item">&laquo;</span>
+        {% endif %}
+
+        {% if paginator.number_pagers <= 6 %}
+            {% set pages = range(start=1,end=paginator.number_pagers + 1) %}
+        {% else %}
+            {% if paginator.current_index <= 4 %}
+                {% set pages = range(start=1,end=paginator.current_index + 1) %}
+            {% else %}
+                {% set pages = [1, "...", paginator.current_index - 1, paginator.current_index] %}
+            {% endif %}
+            {% if paginator.number_pagers - paginator.current_index <= 3  %}
+                {% set pages = pages | concat(with=range(start=paginator.current_index + 1,end=paginator.number_pagers + 1)) %}
+            {% else %}
+                {% set pages = pages | concat(with=[paginator.current_index + 1, "...", paginator.number_pagers]) %}
+            {% endif %}
+        {% endif %}
+        {% for p in pages %}
+            {% if p == paginator.current_index %}
+                <span class="page-item">{{ p }}</span>
+            {% elif p == "..." %}
+                <span class="page-blank">...</span>
+            {% else %}
+                <a href="{{ paginator.base_url }}{{ p }}" class="page-item">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if paginator.next %}
+            <a href="{{ paginator.next }}" class="page-item">&raquo;</a>
+        {% else %}
+            <span class="page-item">&raquo;</span>
+        {% endif %}
+    </nav>
+{% endif %}
