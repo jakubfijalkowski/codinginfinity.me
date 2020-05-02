@@ -24,5 +24,15 @@
         <section class="post-content">
             {{ page.content | safe }}
         </section>
+        <section class="post-comments">
+            <script src="https://utteranc.es/client.js"
+                    repo="jakubfijalkowski/codinginfinity"
+                    issue-term="title"
+                    label="comments"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
+        </section>
     </article>
 {% endblock content %}
