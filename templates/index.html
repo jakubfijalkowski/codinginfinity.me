@@ -69,10 +69,7 @@
                 <article class="posts-item">
                     <header>
                         <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-                        <span class="by-line">
-                            <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S")}}">{{ page.date | date(format="%B %e, %Y") }}</time>
-                            {{ macros::tags(taxonomies=page.taxonomies) }}
-                        </span>
+                        {{ macros::post_descr(page=page) }}
                     </header>
                     <section class="post-content">{{ page.summary | safe }}</section>
                 </article>

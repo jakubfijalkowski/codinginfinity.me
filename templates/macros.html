@@ -7,3 +7,10 @@
 {% endfor -%}
 {%- endif -%}
 {%- endmacro tags %}
+
+{% macro post_descr(page) %}
+    <span class="by-line">
+        <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S")}}">{{ page.date | date(format="%B %e, %Y") }}</time>,
+        {{ page.reading_time }} minute read{{ macros::tags(taxonomies=page.taxonomies) }}
+    </span>
+{% endmacro post_descr %}
