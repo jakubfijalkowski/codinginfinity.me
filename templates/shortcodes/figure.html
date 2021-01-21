@@ -1,0 +1,9 @@
+{% set meta = get_image_metadata(path=page.relative_path | replace(from="index.md", to=src)) %}
+<figure class="{% if position %}{{ position }}{% else -%} center {%- endif %}">
+    <img src="{{ src }}"
+        {% if height %}height="{{ height }}"{% endif %}
+        {% if width %}width="{{ width }}"{% else %}width="{{ meta.width }}"{% endif %} />
+    {% if caption %}
+      <figcaption class="{% if caption_position %}{{ caption_position }}{% else -%} center {%- endif %}">{{ caption }}</figcaption>
+    {% endif %}
+</figure>
