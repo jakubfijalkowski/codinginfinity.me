@@ -3,11 +3,12 @@ base_url = "https://codinginfinity.me"
 title = "Coding Infinity"
 description = "At infinity, nothing is impossible - just like in code"
 
-default_language = "en"
-generate_rss = true
 taxonomies = [
     { name = "tags", paginate_by = 10 }
 ]
+
+generate_feed = true
+feed_filename = "rss.xml"
 
 # The additional languages for the site.
 # Example:
@@ -17,7 +18,7 @@ taxonomies = [
 #       {code = "it"}, # there won't be a RSS feed for Italian content
 #     ]
 #
-languages = []
+default_language = "en"
 
 # When set to "true", the Sass files in the `sass` directory are compiled.
 compile_sass = true
@@ -36,7 +37,7 @@ ignored_content = []
 [markdown]
 highlight_code = true
 highlight_theme = "dimmed-fluid"
-extra_syntaxes = ["syntaxes"]
+extra_syntaxes_and_themes = ["syntaxes"]
 
 render_emoji = true
 smart_punctuation = true
@@ -61,7 +62,7 @@ anchors = "on"
 
 [extra]
 author = "Jakub Fijałkowski"
-copyright = "© Copyright 2016-2020, Jakub Fijałkowski"
+copyright = "© Copyright 2016-2022, Jakub Fijałkowski"
 twitter = "Fiolek_"
 github = "jakubfijalkowski"
 source = "https://github.com/jakubfijalkowski/codinginfinity.me"

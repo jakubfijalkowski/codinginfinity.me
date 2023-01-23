@@ -43,4 +43,4 @@ Of course there is the possibility that app won't be running at all (IIS may kil
 Luckily, we can control Azure using an API, but that has its own problems (although much less severe) and because this post is getting long enough, the battle with Azure and .NET Core will be continued in the next episode. ;)
 
 [\@drunkvs]: https://twitter.com/drunkvs
-[FAKE]: https://fsharp.github.io/FAKE/
+[FAKE]: https://fake.build/

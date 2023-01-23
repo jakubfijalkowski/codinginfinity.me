@@ -29,7 +29,7 @@ This is the easy one - we have whole [FAKE] at our disposal. It has really frien
 
 First, define some constants:
 
-```fsharp
+```fs
 let baseDir = __SOURCE_DIRECTORY__
 let sourceDir = baseDir @@ "src"
 let projectDir = sourceDir @@ ProjectName |> FullName
@@ -39,7 +39,7 @@ let deployZip = baseDir @@ "deploy.zip" |> FullName
 
 Next, we need to create our targets. What do we want them to do? `Clean`, `Restore`, `Build` and `Publish` the app. Easy, right? Of course it is! ;)
 
-```fsharp
+```fs
 Target "Clean" (fun () ->
     !! (projectDir @@ "bin")
     ++ (projectDir @@ "obj")
@@ -75,7 +75,7 @@ OK, we have our app prepared, how do we stop the WebApp then? As I stated earlie
 
 Having the credentials (tenant id, client id and client secret), we can issue the request for Access Token (ARM uses OAuth2 for authentication). It's just a simple `client_credentials` flow, so a single `GET` request is enough. I'm using `HTTP Utilities` and the magnificent `JsonProvider` from [FSharp.Data] to simplify the process:
 
-```fsharp
+```fs
 // Let's wrap the credentials in a record
 type AzureWebAppSettings = {
     TenantId       : string
@@ -101,7 +101,7 @@ let acquireAccessToken settings =
 
 Apart from the previously specified credentials, the ARM needs the subscription id, the resource group and the app name (for a total of 6 configuration parameters...). After providing them, we can finally tell the Azure to stop the app! But how to do that? Don't try to find it on MSDN - it's simply not there (or at least I couldn't find it). You can read how to do it with [Azure CLI] and [PowerShell], but the raw endpoint is not documented. Fortunately, it's rather easy to get it from Google (or extract it from [the source of Azure PowerShell]). It's just a `POST` to `stop` using the `Microsoft.Web` provider:
 
-```fsharp
+```fs
 // Extend the settings with the new ones
 type AzureWebAppSettings = {
     TenantId       : string
@@ -126,7 +126,7 @@ And voilà! The app will be stopped! That's right, it **WILL** be stopped. Some 
 
 I've tried a few distinct approaches on how to ensure the app is stopped (even tried `Thread.Sleep` with a really long time-out), but none of them is as clean as I would want to. The easiest and most reliable one is probably requesting the website until `503 Service Unavailable` is returned (which IIS returns when the app pool is stopped and `HEAD` method is used):
 
-```fsharp
+```fs
 let rec ensureWebAppIsStopped settings =
     let url = sprintf "https://%s.azurewebsites.net" settings.WebAppName
     let response = Http.Request(url, httpMethod = HttpMethod.Head, silentHttpErrors = true)
@@ -141,7 +141,7 @@ Then it should really be dead, `dotnet.exe` should be killed and `w3wp.exe` that
 
 Kudu uses a [totally different set of credentials]. We could provide them together with the tenant id/client id/..., but 8 configuration entries is too much for me (hell, 6 is too much, but I have no idea how to reduce it). Fortunately, we can extract them from the publish settings of the WebApp. They are easily accessible using ARM - we just need to `GET` `publishxml`, parse it and extract FTP credentials:
 
-```fsharp
+```fs
 type AzurePublishXmlResponse = XmlProvider<"""<publishData><publishProfile publishMethod="" userName="" userPWD="" /><publishProfile publishMethod="" userName="" userPWD="" /></publishData>"""> // We don't need more properties
 
 let getKuduCredentials settings accessToken =
@@ -164,7 +164,7 @@ Rather easy, especially with `XmlProvider`, isn't it?
 
 Okay, we now have everything that is required to upload the ZIP package we have prepared earlier. The app is surely stopped, we have Kudu's credentials, we only need to call the [ZIP Controller]:
 
-```fsharp
+```fs
 let makeBasicAuthHeader (username, password) =
     sprintf "%s:%s" username password
     |> Encoding.UTF8.GetBytes
@@ -190,7 +190,7 @@ Knowing how to stop the app, starting it again is really just a matter of changi
 
 Now we can wrap it in a target and configure dependencies:
 
-```fsharp
+```fs
 Target "Upload" (fun () ->
     let token = acquireAccessToken armSettings
     let credentials = getKuduCredentials armSettings token
@@ -215,10 +215,10 @@ The source code, cleaned and packed as a [FAKE] helper, is available on my [GitH
 [Last time]: https://www.codinginfinity.me/post/2016-08-19/fake_your_way_part1 (Fake your way to ASP.NET Core on Azure WebApps, part 1 - The Problem)
 [Azure Resource Manager]: https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/ "Azure Resource Manager"
 [decent documentation]: https://github.com/projectkudu/kudu/wiki/REST-API "Kudu's documentation"
-[FAKE]: https://fsharp.github.io/FAKE/ "F# Make"
-[the tutorial]: https://fsharp.github.io/FAKE/gettingstarted.html "FAKE tutorial"
+[FAKE]: https://fake.build/ "F# Make"
+[the tutorial]: https://fake.build/guide/getting-started.html "FAKE tutorial"
 [link to the docs]: https://azure.microsoft.com/en-us/documentation/articles/resource-manager-api-authentication/ "ARM API Authentication"
-[FSharp.Data]: https://fsharp.github.io/FSharp.Data/ "FSharp.Data"
+[FSharp.Data]: https://fsprojects.github.io/FSharp.Data/ "FSharp.Data"
 [Azure CLI]: https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli "Azure CLI docs"
 [PowerShell]: https://docs.microsoft.com/en-us/powershell/ "Azure PowerShell docs"
 [the source of Azure PowerShell]: https://github.com/Azure/azure-powershell "Source code of Azure PowerShell"

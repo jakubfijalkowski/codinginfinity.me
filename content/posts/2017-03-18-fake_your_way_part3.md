@@ -36,7 +36,7 @@ I would really love to use `pgrep` (or even `ps` and `grep` separately), but sad
 
 The idea is simple. The code is rather straightforward, albeit it's a little long thanks to HTTP calls and JSON deserialization.
 
-```fsharp
+```fs
 type CommandResponse = JsonProvider<"""{"Output":"test","Error":"test","ExitCode":0}""">
 
 let executeCommand settings credentials cmd dir =
