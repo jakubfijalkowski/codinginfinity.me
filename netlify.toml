@@ -14,3 +14,6 @@ for = "/*"
 [headers.values]
 Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 
+[[redirects]]
+from = "/ansi"
+to = "https://drive.google.com/drive/folders/1ExgIPaAsPZirFu4QQCBKkpK2pfuTJmnQ?usp=sharing"
