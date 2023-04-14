@@ -19,7 +19,7 @@ from = "/ansi"
 to = "https://drive.google.com/drive/folders/1ExgIPaAsPZirFu4QQCBKkpK2pfuTJmnQ?usp=sharing"
 
 [[redirects]]
-from = "/script.js"
+from = "/js/script.js"
 to = "https://plausible.io/js/script.js"
 status = "200"
 
