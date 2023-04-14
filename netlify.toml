@@ -17,3 +17,13 @@ Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 [[redirects]]
 from = "/ansi"
 to = "https://drive.google.com/drive/folders/1ExgIPaAsPZirFu4QQCBKkpK2pfuTJmnQ?usp=sharing"
+
+[[redirects]]
+from = "/script.js"
+to = "https://plausible.io/js/script.js"
+status = "200"
+
+[[redirects]]
+from = "/api/event"
+to = "https://plausible.io/api/event"
+status = "200"
